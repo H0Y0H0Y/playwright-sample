@@ -1,9 +1,9 @@
-import { Page, Response } from '@playwright/test';
+import { Locator, Page, Response } from '@playwright/test';
 
 class LoginPageSelectors {
     static get emailInput(): string { return "xpath=//input[@id='email']" }
     static get passwordInput(): string { return "xpath=//input[@id='password']" }
-    static get loginButton(): string { return "xpath=//input[@id='submit']" }
+    static get loginButton(): string { return "xpath=//button[@id='submit']" }
     static get incorrectUserNameOrPasswordError(): string { return "xpath=//span[@id='error']" }
 }
 
@@ -14,15 +14,15 @@ export default class LoginPage {
         this.page = page;
     }
 
-    private async fillEmail(email: string): Promise<void> {
+    async fillEmail(email: string): Promise<void> {
         await this.page.fill(LoginPageSelectors.emailInput, email);
     }
 
-    private async fillPassword(password: string): Promise<void> {
+    async fillPassword(password: string): Promise<void> {
         await this.page.fill(LoginPageSelectors.passwordInput, password);
     }
 
-    private async clickLoginButton(): Promise<Response> {
+    async clickLoginButton(): Promise<Response> {
         const loginPromise: Promise<Response> = this.page.waitForResponse(response =>
             response.url().endsWith('/login') && response.request().method() === 'POST'
         );
@@ -38,7 +38,12 @@ export default class LoginPage {
         await this.fillEmail(email);
         await this.fillPassword(password);
         const response: Response = await this.clickLoginButton();
+        await this.page.waitForURL('/contactList', { waitUntil: 'load' });
 
         return response;
+    }
+
+    async getIncorrectUserNameOrPasswordError(): Promise<Locator> {
+        return this.page.locator(LoginPageSelectors.incorrectUserNameOrPasswordError);
     }
 }
