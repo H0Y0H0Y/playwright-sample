@@ -20,7 +20,6 @@ test.describe("Login", () => {
     test("User should not be able to login successfully if no email is provided", async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.goToLoginPage();
-        await loginPage.fillEmail("");
         await loginPage.fillPassword("P@ssw0rd!");
         const response = await loginPage.clickLoginButton();
 
@@ -32,7 +31,6 @@ test.describe("Login", () => {
         const loginPage = new LoginPage(page);
         await loginPage.goToLoginPage();
         await loginPage.fillEmail("email@email.com");
-        await loginPage.fillPassword("");
         const response = await loginPage.clickLoginButton();
 
         expect(response.ok()).toBeFalsy();

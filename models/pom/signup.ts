@@ -5,8 +5,9 @@ class SignupPageSelectors {
     static get lastNameInput(): string { return "xpath=//input[@id='lastName']" }
     static get emailInput(): string { return "xpath=//input[@id='email']" }
     static get passwordInput(): string { return "xpath=//input[@id='password']" }
-    static get submitButton(): string { return "xpath=//input[@id='submit']" }
+    static get submitButton(): string { return "xpath=//button[@id='submit']" }
     static get cancelButton(): string { return "xpath=//input[@id='cancel']" }
+    static get signupErrorMessage(): string { return "xpath=//span[@id='error']" }
 }
 
 export default class SignupPage {
@@ -16,23 +17,23 @@ export default class SignupPage {
         this.page = page;
     }
 
-    private async fillFirstName(firstName: string): Promise<void> {
+    async fillFirstName(firstName: string): Promise<void> {
         await this.page.fill(SignupPageSelectors.firstNameInput, firstName);
     }
 
-    private async fillLastName(lastName: string): Promise<void> {
+    async fillLastName(lastName: string): Promise<void> {
         await this.page.fill(SignupPageSelectors.lastNameInput, lastName);
     }
 
-    private async fillEmail(email: string): Promise<void> {
+    async fillEmail(email: string): Promise<void> {
         await this.page.fill(SignupPageSelectors.emailInput, email);
     }
 
-    private async fillPassword(password: string): Promise<void> {
+    async fillPassword(password: string): Promise<void> {
         await this.page.fill(SignupPageSelectors.passwordInput, password);
     }
 
-    private async clickSubmitButton(): Promise<Response> {
+    async clickSubmitButton(): Promise<Response> {
         const signupPromise: Promise<Response> = this.page.waitForResponse(response =>
             response.url().endsWith('/users') && response.request().method() === 'POST'
         );
@@ -56,5 +57,9 @@ export default class SignupPage {
         const response: Response = await this.clickSubmitButton();
 
         return response;
+    }
+
+    async getSignupErrorMsgLocator() {
+        return this.page.locator(SignupPageSelectors.signupErrorMessage);
     }
 }
