@@ -24,7 +24,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --shard ${{ matrix.shard }}
+      run: env HOME=/root npx playwright test --shard ${{ matrix.shard }}
     - name: Upload blob report to GitHub Actions Artifacts
       if: always()
       uses: actions/upload-artifact@v3
