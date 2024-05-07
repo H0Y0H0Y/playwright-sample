@@ -8,7 +8,9 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.2.0",
+    "@getgauge/cli": "^1.6.6",
     "@playwright/test": "^1.39.0",
-    "@types/node": "^20.8.9"
+    "@types/node": "^20.8.9",
+    "gauge-ts": "^0.1.1"
   }
 }
