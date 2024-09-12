@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "sample framework using playwright",
   "main": "index.js",
-  "scripts": {},
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -12,5 +11,11 @@
     "@playwright/test": "^1.39.0",
     "@types/node": "^20.8.9",
     "gauge-ts": "^0.1.1"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^11.0.0"
+  },
+  "scripts": {
+    "cucumberTest": "npx cucumber-js -p test_runner"
   }
 }
