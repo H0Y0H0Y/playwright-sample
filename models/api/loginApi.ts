@@ -4,11 +4,7 @@ import { IJSONValue } from "interface/commonInterfaces";
 export default class LoginApi {
     readonly page: Page;
 
-    private constructor(page: Page) {
-        this.page = page;
-    }
-
-    static async login(page: Page, email: string, password: string, retries: number = 3): Promise<void> {
+    static async login(page: Page, email: string, password: string): Promise<APIResponse> {
         
         const request: APIRequestContext = page.request;
         const response: APIResponse = await request.post(
@@ -20,7 +16,9 @@ export default class LoginApi {
                 }
             }
         );
-        const jsonResponse: IJSONValue = await response.json();
-        const accessToken = jsonResponse['token'];
+        // const jsonResponse: IJSONValue = await response.json();
+        // const accessToken = jsonResponse['token'];
+
+        return response;
     }
 }
