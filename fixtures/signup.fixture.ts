@@ -14,19 +14,21 @@ type SignupFixtureType = {
 
 export const test = baseTest.extend<SignupFixtureType>({
     signupUser: async ({ page }, use) => {
+        
         const firstName = faker.person.firstName();
         const lastName = faker.person.lastName();
-        const email = `${firstName}.${lastName}${faker.string.numeric(5)}@mailinator.com`;
         const password = "P@ssw0rd!";
         const payload = {
             firstName: firstName,
             lastName: lastName,
-            email: email,
+            email: `${firstName}.${lastName}${faker.string.numeric(5)}@mailinator.com`,
             password: password
         }
         const response = await SignupApi.signup(page, payload);
         const responseJson = await response.json();
         const token = responseJson.token;
+
+        const email = responseJson.user.email;
 
         await use({ firstName, lastName, email, password, token });
     }
