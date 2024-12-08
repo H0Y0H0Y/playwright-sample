@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import ContactApi from "models/api/contactApi";
 import { addContactErrorSchema, successSchema } from "models/api/schemas/contact.schema";
 
-test.describe("Contact API", () => {
+test.describe("Add Contact API", () => {
 
     test("throws an error when firstName is empty", async ({ page }) => {
 
